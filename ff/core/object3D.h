@@ -65,11 +65,11 @@ namespace ff
 		void rotateZ(float angle) noexcept;
 
 		//再上一次的基础上旋转
-		void setRotateAroundAxis(const glm::vec3& axis, float angle) noexcept;
-
-		////将旋转清空，重新旋转
 		void rotateAroundAxis(const glm::vec3& axis, float angle) noexcept;
 
+		////将旋转清空，重新旋转
+		void setRotateAroundAxis(const glm::vec3& axis, float angle) noexcept;
+		
 		void lookat(const glm::vec3& target, const glm::vec3& up) noexcept;
 
 		void setLocalMatrix(const glm::mat4& localMatrix) noexcept;
@@ -78,9 +78,49 @@ namespace ff
 
 		void addChild(const Object3D::Ptr& child) noexcept;
 
+		virtual void updateMatrix() noexcept;
+
+		virtual glm::mat4 updateWorldMatrix(bool updateParent = false, bool updateChildren = false) noexcept;
+
+		glm::mat4 updateModelViewMatrix(const glm::mat4& viewMatrix)noexcept;
+
+		glm::mat3 updateNormalMatrix() noexcept;
+
+		glm::vec3 getPosition() const noexcept;
+
+		glm::vec3 getWorldPosition() const noexcept;
+
+		glm::vec3 getLocalDirection() const noexcept;
+
+		glm::vec3 getWorldDirection() const noexcept;
+
+		glm::vec3 getUp() const noexcept;
+
+		glm::vec3 getRight() const noexcept;
+
+		glm::mat4 getLocalMatrix() noexcept;
+
+		glm::mat4 getWorldMatrix() noexcept;
+
+		glm::mat4 getModelViewMatrix() noexcept;
+
+		glm::mat3 getNormalMatrix() noexcept;
+		
+		const std::vector<Object3D::Ptr>& getChildren() const noexcept;
+
+		ID getID() const noexcept;
+
 	protected:
 		void decompose() noexcept;
+	
+	public:
+		bool m_visibale{ true };   //是否进行渲染
 
+		bool m_castShadow{ true };  //是否产生阴影
+
+		std::string m_name;	//obj的名字
+
+		bool m_needUpdateMatrix{ true };  //是否强制对矩阵进行更新
 
 	protected:
 		ID m_ID{ 0 };   //全局唯一id
@@ -98,7 +138,7 @@ namespace ff
 		//节点系统
 		std::weak_ptr<Object3D> m_parent;  //防止循环引用
 
-		std::vector<Object3D::Ptr> m_children{};  //存储子节点的sharedPtr,建立一次引用
+		std::vector<Object3D::Ptr> m_children{};  //父节点存储了子节点的sharedPtr，建立一次引用,保证子节点的引用计数至少大于1
 
 		glm::mat4 m_modelViewMatrix = glm::mat4(1.0f);  //将模型顶点从模型坐标系转换到当前摄像机坐标系 viewMatrix * worldMatrix
 

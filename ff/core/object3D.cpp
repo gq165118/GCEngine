@@ -32,7 +32,7 @@ namespace ff
 	{
 		glm::quat quaternion(w, x, y, z);
 
-		//可能已经经过旋转
+		//可能已经经过缩放
 		float scaleX = glm::length(glm::vec3(m_localMatrix[0]));
 		float scaleY = glm::length(glm::vec3(m_localMatrix[1]));
 		float scaleZ = glm::length(glm::vec3(m_localMatrix[2]));
@@ -49,7 +49,7 @@ namespace ff
 
 	void Object3D::setScale(float x, float y, float z) noexcept
 	{
-		//1 通过normalize 去掉之前的scale影响，再世家当前的scale
+		//1 通过normalize 去掉之前的scale影响，再进行当前的scale
 		auto col0 = glm::normalize(glm::vec3(m_localMatrix[0])) * x;
 		auto col1 = glm::normalize(glm::vec3(m_localMatrix[1])) * y;
 		auto col2 = glm::normalize(glm::vec3(m_localMatrix[2])) * z;
@@ -94,14 +94,14 @@ namespace ff
 		decompose();
 	}
 
-	void Object3D::setRotateAroundAxis(const glm::vec3& axis, float angle) noexcept
+	void Object3D::rotateAroundAxis(const glm::vec3& axis, float angle) noexcept
 	{
 		m_localMatrix = glm::rotate(m_localMatrix, glm::radians(angle), axis);
 
 		decompose();
 	}
 
-	void Object3D::rotateAroundAxis(const glm::vec3& axis, float angle) noexcept
+	void Object3D::setRotateAroundAxis(const glm::vec3& axis, float angle) noexcept
 	{
 		//1 获取旋转矩阵
 		glm::mat4 rotateMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(angle), axis);
@@ -117,7 +117,7 @@ namespace ff
 		m_localMatrix[1] = rotateMatrix[1];
 		m_localMatrix[2] = rotateMatrix[2];
 
-		m_localMatrix *= scaleMatrix;
+		m_localMatrix *= scaleMatrix;  //RS
 
 		decompose();
 	}
@@ -174,6 +174,127 @@ namespace ff
 
 		m_children.push_back(child);
 		 
+	}
+
+	void Object3D::updateMatrix() noexcept
+	{
+		if (m_needUpdateMatrix)
+		{
+			m_needUpdateMatrix = false;
+			auto translateMatrix = glm::translate(glm::mat4(1.0f), m_position);
+			auto rotateMatrix = glm::mat4_cast(m_quaternion);
+			auto scaleMatrix = glm::scale(glm::mat4(1.0f), m_scale);
+
+			m_localMatrix = translateMatrix * rotateMatrix * scaleMatrix;
+		}
+	}
+
+	//通过层级matrix相乘，得到最后的转换到世界坐标系的矩阵
+	glm::mat4 Object3D::updateWorldMatrix(bool updateParent = false, bool updateChildren = false) noexcept
+	{
+		//1 检查有没有父节点
+		if (!m_parent.expired() && updateParent)
+		{
+			auto parent = m_parent.lock();
+			parent->updateWorldMatrix(true, false);
+		}
+
+		//2 跟新自己的loaclMatrix并初始化worldMatrix，如果没有父节点，那么二者相等
+		updateMatrix();
+		m_worldMatrix = m_localMatrix;
+
+		//3 如果有父节点，需要做成父节点的woldMatrix， 从而把上方所有的节点的影响带入
+		if (!m_parent.expired())
+		{
+			auto parent = m_parent.lock();
+			m_worldMatrix = parent->m_worldMatrix * m_worldMatrix;
+		}
+
+		//4 依次更新子节点的worldMatrix
+		if (updateChildren)
+		{
+			for (auto& child : m_children)
+			{
+				child->updateWorldMatrix(false, true);
+			}
+		}
+
+		return m_worldMatrix;
+	}
+
+	glm::mat4 Object3D::updateModelViewMatrix(const glm::mat4& viewMatrix)noexcept
+	{
+		m_modelViewMatrix = viewMatrix * m_worldMatrix;
+
+		return m_modelViewMatrix;
+	}
+
+	glm::mat3 Object3D::updateNormalMatrix() noexcept
+	{
+		//normalMatrix 由于存在scale的影响，不能直接变换，否则normal会无法保证从垂直
+		m_normalMatrix = glm::transpose(glm::inverse(glm::mat3(m_modelViewMatrix)));
+
+		return m_normalMatrix;
+	}
+
+	glm::vec3 Object3D::getPosition() const noexcept
+	{
+		return glm::vec3(m_localMatrix[3]);
+	}
+
+	glm::vec3 Object3D::getWorldPosition() const noexcept
+	{
+		return glm::vec3(m_worldMatrix[3]);
+	}
+
+	glm::vec3 Object3D::getLocalDirection() const noexcept
+	{
+		return glm::normalize(-glm::vec3(m_localMatrix[2]));
+	}
+
+	glm::vec3 Object3D::getWorldDirection() const noexcept
+	{
+		return glm::normalize(-glm::vec3(m_worldMatrix[2]));
+	}
+
+	glm::vec3 Object3D::getUp() const noexcept
+	{
+		return glm::normalize(glm::vec3(m_localMatrix[1]));
+	}
+
+	glm::vec3 Object3D::getRight() const noexcept
+	{
+		return glm::normalize(glm::vec3(m_localMatrix[0]));
+	}
+
+	glm::mat4 Object3D::getLocalMatrix() noexcept
+	{
+		return m_localMatrix;
+	}
+
+	glm::mat4 Object3D::getWorldMatrix() noexcept
+	{
+		return m_worldMatrix;
+	}
+
+	glm::mat4 Object3D::getModelViewMatrix() noexcept
+	{
+		return m_modelViewMatrix;
+	}
+
+	glm::mat3 Object3D::getNormalMatrix() noexcept
+	{
+		return m_normalMatrix;
+	}
+
+	const std::vector<Object3D::Ptr>& Object3D::getChildren() const noexcept
+	{
+		return m_children;
+	}
+
+	ID Object3D::getID() const noexcept
+	{
+		return m_ID;
 	}
 
 	void Object3D::decompose() noexcept
