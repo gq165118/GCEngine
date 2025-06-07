@@ -22,7 +22,7 @@ namespace ff
 
 		std::string m_eventName;
 		void* m_target{ nullptr };   //消息主体，哪个对象发出的，存储其指针
-		void* m_pUserDat{ nullptr };	//根据不同的需求，将userData设置成不同的对象指针
+		void* m_pUserData{ nullptr };	//根据不同的需求，将userData设置成不同的对象指针
 
 	};
 
