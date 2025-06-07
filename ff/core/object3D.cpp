@@ -190,7 +190,7 @@ namespace ff
 	}
 
 	//通过层级matrix相乘，得到最后的转换到世界坐标系的矩阵
-	glm::mat4 Object3D::updateWorldMatrix(bool updateParent = false, bool updateChildren = false) noexcept
+	glm::mat4 Object3D::updateWorldMatrix(bool updateParent, bool updateChildren) noexcept
 	{
 		//1 检查有没有父节点
 		if (!m_parent.expired() && updateParent)
