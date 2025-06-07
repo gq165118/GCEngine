@@ -135,7 +135,7 @@ namespace ff
 	{
 		switch (value)
 		{
-			cast DataType::UnsignedByteType:
+		case DataType::UnsignedByteType:
 			return sizeof(unsigned char);
 		case DataType::FloatType:
 			return sizeof(float);
@@ -170,7 +170,7 @@ namespace ff
 		DynamicDrawBuffer
 	};
 
-	static uint32_t toGL(const BufferType& value)
+	static uint32_t toGL(const BufferAllocType& value)
 	{
 		switch (value)
 		{
@@ -204,7 +204,7 @@ namespace ff
 
 	//texture
 	static constexpr uint32_t MAX_TEXTURE_COUNT = 8;
-	static constexpr Gluint MAX_TEXTURE = GL_TEXTURE0 + 7;
+	static constexpr GLuint MAX_TEXTURE = GL_TEXTURE0 + 7;
 
 	enum class TextureType
 	{
@@ -234,7 +234,7 @@ namespace ff
 	};
 
 
-	static Gluint toGL(const TextureFormat& format) noexcept
+	static GLuint toGL(const TextureFormat& format) noexcept
 	{
 		switch (format)
 		{
@@ -249,10 +249,9 @@ namespace ff
 		default:
 			return 0;
 		}
-		}
 	}
 
-	static uint32_t toStbImageFormat(const TextureFormat & format)
+	static uint32_t toStbImageFormat(const TextureFormat& format)
 	{
 		switch (format)
 		{

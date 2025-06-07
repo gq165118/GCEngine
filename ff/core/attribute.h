@@ -28,7 +28,6 @@
 #include "../global/constant.h"
 #include "../tools/identity.h"
 #include "../global/eventDispatcher.h"
-#include "eventDispatcher.h"
 
 namespace ff
 {
@@ -96,7 +95,7 @@ namespace ff
 	using Attributei = Attribute<uint32_t>;
 
 	template<typename T>
-	Attribute(const std::vector<T>& data, uint32_t itemSize, BufferAllocType bufferAllocType) noexcept
+	Attribute<T>::Attribute(const std::vector<T>& data, uint32_t itemSize, BufferAllocType bufferAllocType) noexcept
 	{
 		m_id = Identity::generateID();
 
@@ -135,42 +134,42 @@ namespace ff
 	template<typename T>
 	void Attribute<T>::setY(const uint32_t& index, T value) noexcept
 	{
-		assert(index < mCount);
+		assert(index < m_count);
 
 		mData[index * mItemSize + 1] = x;
 		mNeedsUpdate = true;
 	}
 
 	template<typename T>
-	void Attribute<T>::setZ(const uint32_t& index, T value) noexcept 
+	void Attribute<T>::setZ(const uint32_t& index, T value) noexcept
 	{
-		assert(index < mCount);
+		assert(index < m_count);
 
 		//float vector: a b c d e value g h i j
 		//假设index = 1 itemsize=3
-		mData[index * mItemSize + 2] = x;
+		m_data[index * m_itemSize + 2] = x;
 		mNeedsUpdate = true;
-
+	}
 
 	template<typename T>
 	T Attribute<T>::getX(const uint32_t& index) noexcept 
 	{
-		assert(index < mCount);
-		return mData[index * mItemSize];
+		assert(index < m_count);
+		return m_data[index * m_itemSize];
 	}
 
 	template<typename T>
 	T Attribute<T>::getY(const uint32_t& index) noexcept 
 	{
-		assert(index < mCount);
-		return mData[index * mItemSize + 1];
+		assert(index < m_count);
+		return m_data[index * m_itemSize + 1];
 	}
 
 	template<typename T>
 	T Attribute<T>::getZ(const uint32_t& index) noexcept 
 	{
-		assert(index < mCount);
-		return mData[index * mItemSize + 2];
+		assert(index < m_count);
+		return m_data[index * m_itemSize + 2];
 	}
 
 }
