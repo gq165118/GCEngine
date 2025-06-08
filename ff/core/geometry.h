@@ -71,7 +71,7 @@ namespace ff
 
 		void computeBoundingSphere() noexcept;
 
-		Sphere::Ptr getBoundingSphere() const noexcept { return m_bonudingSphere; }
+		Sphere::Ptr getBoundingSphere() const noexcept { return m_boundingSphere; }
 
 		Box3::Ptr getBoundingBox() const noexcept { return m_boundingBox; }
 
