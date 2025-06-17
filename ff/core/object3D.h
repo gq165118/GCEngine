@@ -19,18 +19,18 @@ namespace ff
 	class ObjectTypeChecker
 	{
 	public:
-		bool mIsRenderableObject{ false };
-		bool mIsMesh{ false };
-		bool mIsSkinnedMesh{ false };
-		bool mIsBone{ false };
-		bool mIsScene{ false };
-		bool mIsCamera{ false };
-		bool mIsPerpectiveCamera{ false };
-		bool mIsOrthographicCamera{ false };
-		bool mIsGroup{ false };
-		bool mIsLight{ false };
-		bool mIsAmbientLight{ false };
-		bool mIsDirectionalLight{ false };
+		bool m_isRenderableObject{ false };
+		bool m_isMesh{ false };
+		bool m_isSkinnedMesh{ false };
+		bool m_isBone{ false };
+		bool m_isScene{ false };
+		bool m_isCamera{ false };
+		bool m_isPerpectiveCamera{ false };
+		bool m_isOrthographicCamera{ false };
+		bool m_isGroup{ false };
+		bool m_isLight{ false };
+		bool m_isAmbientLight{ false };
+		bool m_isDirectionalLight{ false };
 	};
 
 
