@@ -56,6 +56,8 @@ namespace ff {
 			);
 		}
 
+		//Texture();
+
 		Texture(
 			const uint32_t& width,
 			const uint32_t& height,
@@ -70,9 +72,9 @@ namespace ff {
 
 		~Texture() noexcept;
 
-		ID getID() const noexcept { return m_id };
+		ID getID() const noexcept { return m_id; }
 
-		TextureUsage getUsage() const noexcept { return m_usage };
+		TextureUsage getUsage() const noexcept { return m_usage; }
 
 		virtual Texture::Ptr clone() noexcept;
 

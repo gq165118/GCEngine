@@ -4,6 +4,7 @@
 
 namespace ff {
 
+	//Texture::Texture() {}
 	Texture::Texture(
 		const uint32_t& width,
 		const uint32_t& height,
