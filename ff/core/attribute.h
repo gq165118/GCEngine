@@ -70,11 +70,15 @@ namespace ff
 
 		auto getNeedUpdate() const noexcept { return m_needUpdate; }
 
-		Range getUpdateRange() const noexcept { return mUpdateRange; }
+		void clearNeedsUpdate() noexcept { m_needUpdate = false; }
 
-		void clearUpdateRange() noexcept { mUpdateRange.mOffset = 0; mUpdateRange.mCount = -1; }
+		auto getBufferAllocType() const noexcept { return m_bufferAllocType; }
 
-		auto getDataType() const noexcept { return mDataType; }
+		Range getUpdateRange() const noexcept { return m_updateRange; }
+
+		void clearUpdateRange() noexcept { m_updateRange.m_offset = 0; m_updateRange.m_count = -1; }
+
+		auto getDataType() const noexcept { return m_dataType; }
 
 	private:
 		ID				m_id{ 0 };

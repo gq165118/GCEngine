@@ -31,6 +31,6 @@ using KeyBoardState = std::bitset<MAX_KEY_NUM>;
 using ID = uint32_t;
 
 struct Range {
-	int32_t mOffset{ 0 };
-	int32_t mCount{ -1 };
+	int32_t m_offset{ 0 };
+	int32_t m_count{ -1 };
 };

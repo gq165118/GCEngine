@@ -57,7 +57,7 @@ namespace ff
 		return false;
 	}
 
-	const Geometry::AttributeMap& Geometry::getAttribute() const noexcept
+	const Geometry::AttributeMap& Geometry::getAttributes() const noexcept
 	{
 		return m_attributes;
 	}

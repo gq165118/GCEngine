@@ -61,7 +61,7 @@ namespace ff
 
 		bool hasAttribute(const std::string& name) noexcept;
 
-		const AttributeMap& getAttribute() const noexcept;
+		const AttributeMap& getAttributes() const noexcept;
 
 		ID getID() const noexcept;
 
