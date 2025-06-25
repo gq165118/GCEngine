@@ -179,19 +179,19 @@ namespace ff
 
 		auto function = std::bind(functionPointer, target, std::placeholders::_1);
 		Listener::Ptr listener = Listener::create();
-		listener->mTarget = target;
-		listener->mFuncionPointerDescriptor = Listener::buildFunctionPointer(functionPointer);
-		listener->mFunction = function;
+		listener->m_target = target;
+		listener->m_functionPointerDescriptor = Listener::buildFunctionPointer(functionPointer);
+		listener->m_function = function;
 
-		auto listenerIter = std::find_if(ListenerQueue.begin(), ListenerQueue.end(),
+		auto listenerIter = std::find_if(listenerQueue.begin(), listenerQueue.end(),
 			[&](const Listener::Ptr& l)
 			{
 				return EventDispatcher::listenerIsEqual(listener, l);
 			});
 
-		if (listenerIter != ListenerQueue.end())
+		if (listenerIter != listenerQueue.end())
 		{
-			listenerIter.erase(listenerIter);
+			listenerQueue.erase(listenerIter);
 		}
 	}
 
