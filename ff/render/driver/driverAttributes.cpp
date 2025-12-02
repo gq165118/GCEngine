@@ -37,7 +37,7 @@ namespace ff
 	//对应前端Attribute，Attribute在析构的时候会创建attributeDispose事件
 	void DriverAttributes::onAttributeDispose(const EventBase::Ptr& e)
 	{
-		ID attrID = *((ID*)e->m_pUserData);
+		ID attrID = *((ID*)e->mpUserData);
 		remove(attrID);  //将后端的id销毁
 	}
 

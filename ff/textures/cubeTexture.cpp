@@ -26,7 +26,7 @@ namespace ff {
 			if (source) 
 			{
 				EventBase::Ptr e = EventBase::create("sourceRelease");
-				e->m_target = source.get();
+				e->mTarget = source.get();
 				EventDispatcher::getInstance()->dispatchEvent(e);
 			}
 		}

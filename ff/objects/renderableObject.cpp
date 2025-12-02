@@ -14,9 +14,9 @@ namespace ff
 
 	void RenderableObject::onBeforeRender(Renderer* renderer, Scene* scene, Camera* camera)
 	{
-		if (m_onBeforRenderCallback)
+		if (m_onBeforeRenderCallback)
 		{
-			m_onBeforRenderCallback(renderer, scene, camera);
+			m_onBeforeRenderCallback(renderer, scene, camera);
 		}
 	}
 }

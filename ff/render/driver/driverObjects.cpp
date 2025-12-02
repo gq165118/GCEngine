@@ -9,9 +9,9 @@ namespace ff {
 		const DriverInfo::Ptr& info
 	) noexcept 
 	{
-		mGeometries = geometries;
-		mAttributes = attributes;
-		mInfo = info;
+		m_geometries = geometries;
+		m_attributes = attributes;
+		m_info = info;
 	}
 
 	DriverObjects::~DriverObjects() noexcept {}

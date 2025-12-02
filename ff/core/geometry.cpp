@@ -13,7 +13,7 @@ namespace ff
 	{
 		//对所有的监听函数，发出本Geometry消亡的消息
 		EventBase::Ptr e = EventBase::create("geometryDispose");
-		e->m_target = this;
+		e->mTarget = this;
 		EventDispatcher::getInstance()->dispatchEvent(e);
 	}
 

@@ -62,7 +62,7 @@ namespace ff
 		void onBeforeRender(Renderer* renderer, Scene* scene, Camera* camera);
 
 	public:
-		OnBeforRenderCallback m_onBeforRenderCallback{ nullptr }; //在本物体可绘制物体进行渲染之前，会回调这个函数进行通知
+		OnBeforRenderCallback m_onBeforeRenderCallback{ nullptr }; //在本物体可绘制物体进行渲染之前，会回调这个函数进行通知
 
 	protected:
 		Geometry::Ptr m_geometry{ nullptr };

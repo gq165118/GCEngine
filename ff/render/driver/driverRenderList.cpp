@@ -54,7 +54,7 @@ namespace ff {
 	) noexcept 
 	{
 		RenderItem::Ptr renderItem = nullptr;
-		if (m_renderItemIndex > m_renderItemCache.size()) //当前renderItem的总数已经大于了缓存数量，那么就重新生成
+		if (m_renderItemIndex >= m_renderItemCache.size()) //当前renderItem的总数已经大于了缓存数量，那么就重新生成
 		{
 			renderItem = RenderItem::create();
 			m_renderItemCache.push_back(renderItem);

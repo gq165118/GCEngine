@@ -61,7 +61,7 @@ namespace ff
 	void RenderTarget::dispose() noexcept
 	{
 		EventBase::Ptr e = EventBase::create("renderTargetDispose");
-		e->m_target = this;
+		e->mTarget = this;
 		EventDispatcher::getInstance()->dispatchEvent(e);
 	}		
 }

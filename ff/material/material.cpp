@@ -15,7 +15,7 @@ namespace ff {
 	{
 		//再析构的时候，向外发出消息，通知监听函数们，哪一个材质消亡了
 		EventBase::Ptr e = EventBase::create("materialDispose");
-		e->m_target = this;
+		e->mTarget = this;
 		EventDispatcher::getInstance()->dispatchEvent(e);
 	}
 

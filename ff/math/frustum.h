@@ -36,7 +36,11 @@ namespace ff {
 
 	class Frustum {
 	public:
-		uising Ptr = std::shared_ptr<Frustum>;
+		using Ptr = std::shared_ptr<Frustum>;
+		static Ptr create()
+		{
+			return std::make_shared<Frustum>();
+		}
 
 		Frustum() noexcept
 		{
@@ -50,26 +54,26 @@ namespace ff {
 		void setFromProjectionMatrix(glm::mat4& matrix)
 		{
 			auto m = glm::value_ptr(matrix);
-			mPlanes[0]->setComponents(m[3] - m[0], m[7] - m[4], m[11] - m[8], m[15] - m[12]);
-			mPlanes[1]->setComponents(m[3] + m[0], m[7] + m[4], m[11] + m[8], m[15] + m[12]);
-			mPlanes[2]->setComponents(m[3] + m[1], m[7] + m[5], m[11] + m[9], m[15] + m[13]);
-			mPlanes[3]->setComponents(m[3] - m[1], m[7] - m[5], m[11] - m[9], m[15] - m[13]);
-			mPlanes[4]->setComponents(m[3] - m[2], m[7] - m[6], m[11] - m[10], m[15] - m[14]);
-			mPlanes[5]->setComponents(m[3] + m[2], m[7] + m[6], m[11] + m[10], m[15] + m[14]);
+			m_planes[0]->setComponents(m[3] - m[0], m[7] - m[4], m[11] - m[8], m[15] - m[12]);
+			m_planes[1]->setComponents(m[3] + m[0], m[7] + m[4], m[11] + m[8], m[15] + m[12]);
+			m_planes[2]->setComponents(m[3] + m[1], m[7] + m[5], m[11] + m[9], m[15] + m[13]);
+			m_planes[3]->setComponents(m[3] - m[1], m[7] - m[5], m[11] - m[9], m[15] - m[13]);
+			m_planes[4]->setComponents(m[3] - m[2], m[7] - m[6], m[11] - m[10], m[15] - m[14]);
+			m_planes[5]->setComponents(m[3] + m[2], m[7] + m[6], m[11] + m[10], m[15] + m[14]);
 		}
 
 		bool intersectObject(const RenderableObject::Ptr& object) noexcept
 		{
 			auto geomtry = object->getGeometry();
 
-			if (geomtry->getBoundingSphere == nullptr)
+			if (geomtry->getBoundingSphere() == nullptr)
 			{
 				geomtry->computeBoundingSphere();
 			}
 
 			//因为使用的是智能指针，如果直接直接变换会导致geometry里面包含的球不停的累加变换
-			m_toolSphere->copy(geomtry->getBoundingSphere);
-			m_toolSphere->applyMatrix4(object->getWorldMatrix);
+			m_toolSphere->copy(geomtry->getBoundingSphere());
+			m_toolSphere->applyMatrix4(object->getWorldMatrix());
 
 			return intersectSphere(m_toolSphere);
 		}

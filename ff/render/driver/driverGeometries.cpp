@@ -43,7 +43,7 @@ namespace ff
 
 	void DriverGeometries::onGeometryDispose(const EventBase::Ptr& e) noexcept
 	{
-		const auto geometry = static_cast<Geometry*>(e->m_target);
+		const auto geometry = static_cast<Geometry*>(e->mTarget);
 
 		m_geometries.erase(geometry->getID());
 

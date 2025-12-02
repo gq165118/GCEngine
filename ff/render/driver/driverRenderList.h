@@ -151,7 +151,7 @@ namespace ff
 		//在每一次构建完毕渲染列表的时候调用finish
 		void finish() noexcept;
 
-		const auto& getOpaqueue() const noexcept { return m_opaqueue; }
+		const auto& getOpaques() const noexcept { return m_opaqueue; }
 
 		const auto& getTransparents() const noexcept { return m_transparents; }
 

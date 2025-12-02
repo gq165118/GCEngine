@@ -34,13 +34,13 @@ namespace ff {
 	{
 		//消亡的时候，通过dispatcher向外发出本texture消亡的消息
 		EventBase::Ptr e = EventBase::create("textureDispose");
-		e->m_target = this;
+		e->mTarget = this;
 		EventDispatcher::getInstance()->dispatchEvent(e);
 
 		if (m_source)
 		{
 			EventBase::Ptr e = EventBase::create("sourceRelease");
-			e->m_target = this;
+			e->mTarget = this;
 			EventDispatcher::getInstance()->dispatchEvent(e);
 		}
 	}

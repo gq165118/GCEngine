@@ -35,7 +35,7 @@ namespace ff
 			bool			mNeedsDepthBuffer{ true };
 			bool			mNeedsStencilBuffer{ false };
 
-			//鍏佽澶栭儴璁惧畾
+			//允许外部设定
 			DepthTexture::Ptr	m_depthTexture{ nullptr };
 		};
 
@@ -56,7 +56,6 @@ namespace ff
 		virtual void setSize(const uint32_t& width, const uint32_t& height) noexcept;
 
 		void dispose() noexcept;
-
 
 	protected:
 		ID				m_id{ 0 };
