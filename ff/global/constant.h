@@ -338,7 +338,7 @@ namespace ff
 
 	enum  class Side
 	{
-		FrontSide,
+		FrontSide, 
 		BackSide,
 		DoubleSide,
 		None

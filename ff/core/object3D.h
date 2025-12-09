@@ -114,7 +114,7 @@ namespace ff
 		void decompose() noexcept;
 	
 	public:
-		bool m_visibale{ true };   //是否进行渲染
+		bool m_visible{ true };   //是否进行渲染
 
 		bool m_castShadow{ true };  //是否产生阴影
 
