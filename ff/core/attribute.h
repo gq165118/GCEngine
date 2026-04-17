@@ -38,7 +38,7 @@ namespace ff
 	{
 	public:
 		using Ptr = std::shared_ptr<Attribute<T>>;
-		static Ptr carete(const std::vector<T>& data, uint32_t iiemSize, BufferAllocType bufferAllocType = BufferAllocType::StaticDrawBuffer)
+		static Ptr create(const std::vector<T>& data, uint32_t itemSize, BufferAllocType bufferAllocType = BufferAllocType::StaticDrawBuffer)
 		{
 			return std::make_shared<Attribute<T>>(data, itemSize, bufferAllocType);
 		}
@@ -118,8 +118,8 @@ namespace ff
 	{
 		//发送消息给到各类监听的函数，通知他们哪个attribute已经消亡
 		EventBase::Ptr e = EventBase::create("attributeDispose");
-		e->m_target = this;
-		e->m_pUserData = &m_id;
+		e->mTarget = this;
+		e->mpUserData = &m_id;
 
 		EventDispatcher::getInstance()->dispatchEvent(e);
 	}

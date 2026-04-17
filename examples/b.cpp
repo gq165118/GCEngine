@@ -1,0 +1,1 @@
+extern const int g = 100l

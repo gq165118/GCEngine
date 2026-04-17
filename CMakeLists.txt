@@ -14,3 +14,15 @@ link_directories(
 )
 
 add_subdirectory(ff)
+
+add_executable(triangle "examples/triangle.cpp" )
+add_executable(test "examples/test.cpp" )
+
+#target_link_libraries(dianosaurScene ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+target_link_libraries(triangle ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+#target_link_libraries(cube ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+#target_link_libraries(directionalLight ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+#target_link_libraries(materials ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+#target_link_libraries(modelLoading ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+#target_link_libraries(animation ff_lib  glfw3.lib assimp-vc143-mtd.lib)
+#arget_link_libraries(renderTarget ff_lib  glfw3.lib assimp-vc143-mtd.lib)

@@ -34,6 +34,10 @@ namespace ff
 	{
 	public:
 		using Ptr = std::shared_ptr<PerspectiveCamera>;
+		static Ptr create(float near, float far, float aspect, float fov) 
+		{
+			return std::make_shared <PerspectiveCamera>(near, far, aspect, fov);
+		}
 
 		PerspectiveCamera(float near, float far, float aspect, float fov) noexcept;
 

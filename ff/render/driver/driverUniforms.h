@@ -116,12 +116,12 @@ namespace ff {
 	{
 	public:
 		using Ptr = std::shared_ptr<PureArrayUniform>;
-		static Ptr create(const std::string& id, const GLint& location, const GLenum& type)
+		static Ptr create(const std::string& id, const GLint& location, const GLenum& type, GLint size)
 		{
-			return std::make_shared<PureArrayUniform>(id, location, type);
+			return std::make_shared<PureArrayUniform>(id, location, type, size);
 		}
 
-		PureArrayUniform(const std::string& iid, const GLint& location, const GLenum& type);
+		PureArrayUniform(const std::string& id, const GLint& location, const GLenum& type, GLint size) noexcept;
 
 		~PureArrayUniform();
 
@@ -193,8 +193,12 @@ namespace ff {
 
 	class StructuredUniform :public UniformBase, public UniformContainer 
 	{
+	public:
 		using Ptr = std::shared_ptr<StructuredUniform>;
-		
+		static Ptr create(const std::string& id)
+		{
+			return std::make_shared<StructuredUniform>(id);
+		}
 
 		StructuredUniform(const std::string& id) noexcept;
 
@@ -208,24 +212,37 @@ namespace ff {
 
 	class DriverUniforms :public UniformContainer, public std::enable_shared_from_this<DriverUniforms> {
 	public:
+		using Ptr = std::shared_ptr<DriverUniforms>;
+		static Ptr create(const GLint& program)
+		{
+			return std::make_shared<DriverUniforms>(program);
+		}
+
+		DriverUniforms(const GLint& program) noexcept;
+
+		~DriverUniforms();
+		void upload(UniformHandleMap& unifromHandleMap, const DriverTextures::Ptr& textures);
+
+		void addUniform(UniformContainer* container, const UniformBase::Ptr& uniformObject);
 		
-
 		//texture slots
-	
+		void setTextureSlot(const GLint& location, GLuint slot) noexcept;
 
-
+		GLint getTextureSlot(const GLint& location) noexcept;
 
 
 		//跟Texture Array相关 uniform sampler2D texs[10];
+		void setTextureArraySlot(const GLint& location, std::vector<GLint> slots) noexcept;
 
+		std::vector<GLint> getTextureArraySlot(const GLint& location) noexcept;
 
 		//返回n个可以使用的textureUnits
-		
+		std::vector<GLint> allocateTextureUnits(const int& n);
 
 	private:
 		//key:某一个uniform sampler2D tex;变量的location
 		//value：GL_TEXTUREXXXX
-		
+		std::unordered_map<GLint, GLuint> m_textureSlots{};
 
 		//uniform sampler2D texs[10];
 		//name: texs[0] 
@@ -234,10 +251,10 @@ namespace ff {
 		//每个purearrayuniform只有一个location
 		//key：PureArrayUniform这种类型的texture数组的location 
 		//value：数组，为这个texture数组当中的所有textures按序分配的textureUnits
-		
+		std::unordered_map<GLint, std::vector<GLint>> m_textureArraySlots{};
 
 		//用于记录当前已经分配到了哪一个TextureUnit
-		
+		GLint m_currentTextureSlots{ 0 };
 	};
 
 
@@ -373,21 +390,36 @@ namespace ff {
 	}
 
 	template<>
-	void PureArrayUniform::upload<glm::ivec3>(const glm::ivec3* value);
+	void PureArrayUniform::upload<glm::ivec3>(const glm::ivec3* value)
+	{
+
+	}
 
 	template<>
-	void PureArrayUniform::upload<glm::ivec4>(const glm::ivec4* value);
+	void PureArrayUniform::upload<glm::ivec4>(const glm::ivec4* value)
+	{
+
+	}
 
 	//no bool bvec2 bvec3 bvec4 we use int instead
 
 	template<>
-	void PureArrayUniform::upload<glm::mat2>(const glm::mat2* value);
+	void PureArrayUniform::upload<glm::mat2>(const glm::mat2* value)
+	{
+
+	}
 
 	template<>
-	void PureArrayUniform::upload<glm::mat3>(const glm::mat3* value);
+	void PureArrayUniform::upload<glm::mat3>(const glm::mat3* value)
+	{
+
+	}
 
 	template<>
-	void PureArrayUniform::upload<glm::mat4>(const glm::mat4* value);
+	void PureArrayUniform::upload<glm::mat4>(const glm::mat4* value)
+	{
+
+	}
 
 
 }

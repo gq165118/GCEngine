@@ -76,7 +76,7 @@ namespace ff
 		uint32_t			m_version{ 1 }; //version 用于首次解析
 
 		//=========== raster 光栅化 ============//
-		FrontFace			m_fronetFace{ FrontFace::FrontCounterClockWise };
+		FrontFace			m_frontFace{ FrontFace::FrontCounterClockWise };
 		Side				m_side{ Side::DoubleSide };
 
 		DrawMode			m_drawMode{ DrawMode::Triangles };
@@ -90,7 +90,7 @@ namespace ff
 		BlendingEquation	m_blendEuqation{ BlendingEquation::AddEquation };
 		BlendingFactor		m_blendSrcAlpha{ BlendingFactor::None };
 		BlendingFactor		m_blendDstAlpha{ BlendingFactor::Zero };
-		BlendingEquation	mBlendEquationAlpha{ BlendingEquation::AddEquation };
+		BlendingEquation	m_blendEquationAlpha{ BlendingEquation::AddEquation };
 
 		//============== depth ================//
 		bool				m_depthTest{ true }; //是否开启深度检测
